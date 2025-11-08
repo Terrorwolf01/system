@@ -8,3 +8,4 @@ An OpenAction ([OpenDeck](https://github.com/nekename/OpenDeck) / [Tacto](https:
 - RAM
 - Uptime
 - OS
+- GPU
