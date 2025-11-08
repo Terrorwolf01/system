@@ -4,6 +4,8 @@ use openaction::*;
 
 use sysinfo::System;
 
+use gfxinfo::active_gpu;
+
 struct CPUAction;
 #[async_trait]
 impl Action for CPUAction {
@@ -15,6 +17,13 @@ struct RAMAction;
 #[async_trait]
 impl Action for RAMAction {
 	const UUID: ActionUuid = "me.amankhanna.oasystem.ram";
+	type Settings = HashMap<String, String>;
+}
+
+struct GPUAction;
+#[async_trait]
+impl Action for GPUAction {
+	const UUID: ActionUuid = "me.amankhanna.oasystem.gpu";
 	type Settings = HashMap<String, String>;
 }
 
@@ -97,6 +106,13 @@ async fn main() -> OpenActionResult<()> {
 						.await;
 				}
 			}
+
+			let gpu_usage = format!("{:.0}%", active_gpu().expect("REASON").info().load_pct());
+			for instance in visible_instances(GPUAction::UUID).await {
+				let _ = instance.set_title(Some(gpu_usage.clone()), None).await;
+			}
+
+
 		}
 	});
 
@@ -104,6 +120,7 @@ async fn main() -> OpenActionResult<()> {
 	register_action(RAMAction).await;
 	register_action(UptimeAction).await;
 	register_action(OSAction).await;
+	register_action(GPUAction).await;
 
 	run(std::env::args().collect()).await
 }

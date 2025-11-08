@@ -1,7 +1,7 @@
 {
 	"Name": "System Information",
 	"Author": "nekename",
-	"Version": "1.0.0",
+	"Version": "1.0.1",
 	"Category": "System Information",
 	"Icon": "icon",
 	"OS": [{ "Platform": "windows" }, { "Platform": "mac" }, { "Platform": "linux" }],
@@ -31,6 +31,14 @@
 			"Tooltip": "Displays RAM utilisation",
 			"Controllers": ["Keypad", "Encoder"],
 			"States": [{ "Title": "0GB", "FontSize": 14 }]
+		},
+		{
+			"UUID": "me.amankhanna.oasystem.gpu",
+			"Name": "GPU",
+			"Icon": "icon",
+			"Tooltip": "Displays GPU utilisation",
+			"Controllers": ["Keypad", "Encoder"],
+			"States": [{ "Title": "0%", "FontSize": 16 }]
 		},
 		{
 			"UUID": "me.amankhanna.oasystem.uptime",
