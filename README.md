@@ -6,6 +6,6 @@ An OpenAction ([OpenDeck](https://github.com/nekename/OpenDeck) / [Tacto](https:
 
 - CPU
 - RAM
+- GPU
 - Uptime
 - OS
-- GPU

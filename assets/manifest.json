@@ -1,7 +1,7 @@
 {
 	"Name": "System Information",
 	"Author": "nekename",
-	"Version": "1.0.1",
+	"Version": "1.0.0",
 	"Category": "System Information",
 	"Icon": "icon",
 	"OS": [{ "Platform": "windows" }, { "Platform": "mac" }, { "Platform": "linux" }],

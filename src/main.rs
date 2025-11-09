@@ -2,9 +2,8 @@ use std::collections::HashMap;
 
 use openaction::*;
 
-use sysinfo::System;
-
 use gfxinfo::active_gpu;
+use sysinfo::System;
 
 struct CPUAction;
 #[async_trait]
@@ -90,6 +89,15 @@ async fn main() -> OpenActionResult<()> {
 				let _ = instance.set_title(Some(ram_usage.clone()), None).await;
 			}
 
+			let gpu_usage = if let Ok(gpu) = active_gpu() {
+				format!("{:.0}%", gpu.info().load_pct())
+			} else {
+				"No GPU found".to_owned()
+			};
+			for instance in visible_instances(GPUAction::UUID).await {
+				let _ = instance.set_title(Some(gpu_usage.clone()), None).await;
+			}
+
 			{
 				let total_secs = System::uptime();
 				let days = total_secs / 86_400;
@@ -106,21 +114,14 @@ async fn main() -> OpenActionResult<()> {
 						.await;
 				}
 			}
-
-			let gpu_usage = format!("{:.0}%", active_gpu().expect("REASON").info().load_pct());
-			for instance in visible_instances(GPUAction::UUID).await {
-				let _ = instance.set_title(Some(gpu_usage.clone()), None).await;
-			}
-
-
 		}
 	});
 
 	register_action(CPUAction).await;
 	register_action(RAMAction).await;
+	register_action(GPUAction).await;
 	register_action(UptimeAction).await;
 	register_action(OSAction).await;
-	register_action(GPUAction).await;
 
 	run(std::env::args().collect()).await
 }
